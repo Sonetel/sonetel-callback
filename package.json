@@ -1,0 +1,25 @@
+{
+  "name": "sonetel-callback-app",
+  "version": "1.0.0",
+  "description": "A Progressive Web App that makes use of Sonetel's callback APIs to initiate phone calls.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aashish Joshi",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^10.4.7",
+    "cssnano": "^5.1.11",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-postcss": "^9.0.1",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-terser": "^2.1.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    
+  }
+}

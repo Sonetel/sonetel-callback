@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sonetel Callback App</title>
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+
+    <meta name="apple-mobile-web-app-status-bar" content="#68d0d0" />
+    <meta name="theme-color" content="#68d0d0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/sonetel.css" />
+  </head>
+  <body>
+    <main>
+      <nav>
+        <div class="w3-margin w3-xxlarge sonetel-nav">
+          <!-- TODO: Replace with link to production URL -->
+          <div class="w3-left">
+          <a href="#">
+            <img
+              src="images/logo.png"
+              alt="Sonetel Logo"
+              class="sonetel-logo"
+            />
+          </a>
+        </div>
+        <div class="logout w3-right">
+        <span>
+            <button
+              id="logoutButton"
+              class="w3-button"
+              title="Logout"
+              onclick="logout()"
+            >
+              <i class="fa fa-sign-out" aria-hidden="true"></i>
+            </button>
+          </span>
+        </div>  
+        </div>
+      </nav>
+      <div class="sonetel-form w3-display-middle" id="signin">
+        <form
+            id="loginForm"
+            method="post"
+            class="w3-container"
+            onsubmit="return login()"
+          >
+          <h2 style="margin-bottom: 32px;" class="w3-left page-title">Sign in</h2>
+            <!-- Sonetel Username -->
+            <div class="w3-row w3-section">
+              <div class="w3-rest">
+                <input
+                  class="w3-input w3-border sonetel-input"
+                  id="username"
+                  name="username"
+                  type="email"
+                  placeholder="Email"
+                  required
+                  autocomplete="on"
+                  autofocus="yes"
+                />
+              </div>
+            </div>
+            <!-- Sonetel Password -->
+            <div class="w3-row w3-section">
+              <div class="w3-rest">
+                <input
+                  class="w3-input w3-border sonetel-input"
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  required
+                  autocomplete="on"
+                />
+              </div>
+            </div>
+            <input
+              type="hidden"
+              id="grant_type"
+              name="grant_type"
+              value="password"
+            />
+            <input type="hidden" id="refresh" name="refresh" value="no" />
+            <!-- Sign in button -->
+            <p class="w3-center">
+              <input
+                type="submit"
+                class="w3-button w3-section sonetel-button w3-ripple"
+                value="Sign in"
+              />
+              <br>
+              <a href="https://app.sonetel.com/reset-password" target="_blank" class="text-link">Reset Password</a>
+            </p>
+          </form>
+      </div>
+    </main>
+    <script src="./assets/js/index.js"></script>
+  </body>
+</html>

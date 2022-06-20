@@ -1,0 +1,42 @@
+{
+  "name": "Sonetel Callback",
+  "short_name": "Sonetel Callback",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#fdfdfd",
+  "theme_color": "#68d0d0",
+  "orientation": "portrait-primary",
+  "protocol_handlers" : [
+      {
+        "protocol": "tel",
+        "url":"index.html?num=%s"
+      }
+  ],
+  "icons": [
+    {
+      "src": "/images/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/images/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "images/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    },
+    {
+      "src": "images/favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "images/favicon-16x16.png",
+      "type": "image/png",
+      "sizes": "16x16"
+    }
+  ]
+}

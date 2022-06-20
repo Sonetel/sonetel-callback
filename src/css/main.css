@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans:wght@300;400&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #fdfdfd;
+  font-family: "Noto Sans", sans-serif;;
+  font-size: 1rem;
+}
+main {
+  margin: auto;
+  text-align: center;
+}
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+form{
+  padding: 5%;
+}
+
+form > input{
+  margin-bottom: 8px;
+}
+
+.sonetel-button{
+  color: white !important;
+  background-color: #68d0d0 !important;
+  border-radius: 4px;
+  width: 100%;
+  height: 48px;
+  outline: none;
+}
+
+.page-title{
+  font-weight: 500;
+  line-height: 36px;
+  font-size: 28px;
+  outline: none;
+}
+
+.sonetel-input{
+  width: 100%;
+  height: 50px;
+  /* padding: 12px; */
+}
+
+.text-link{
+  text-decoration: none;
+  color: #89909A;
+  outline: none;
+}
+
+.sonetel-logo{
+  height: 40px;
+  width: 40px;
+  outline: none;
+}
+
+.sonetel-nav{
+  width: 100%;
+  outline: none;
+}
+
+.sonetel-form {
+  width: 336px;
+}
+
+::placeholder{
+  color: #bcc0c5;
+}
+
+.logout{
+  outline: none;
+}
+
+@media screen and (min-width: 768px) {
+  .sonetel-logo{
+    position: fixed;
+    margin-top: 64px;
+    margin-left: 64px;
+  }
+
+  .logout{
+    outline: none;
+    margin-top: 64px;
+    margin-right: 64px;
+  }
+}
