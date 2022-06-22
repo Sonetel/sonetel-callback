@@ -52,4 +52,6 @@ function logout() {
     toggleDisplay('makecall','hide');
     toggleDisplay('logoutButton','hide');
     window.localStorage.removeItem('access_token');
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
 }
