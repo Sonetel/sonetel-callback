@@ -10,6 +10,10 @@
 const API_BASE = 'https://public-api.sonetel.com';
 const AUTH_API = 'https://api.sonetel.com/SonetelAuth/beta/oauth/token';
 const MSG_ID = 'messageBox';
+var userId;
+var accountId;
+var userEmail;
+var userPrefCache;
 
 
 // TO DO: Check if the user is connected to the internet. If not, show an error message.
@@ -20,6 +24,8 @@ checkSignIn();
 // If the URL contains the number to call, set it as call2
 getUrlParam();
 
+// Set the default values from the cache if the user is logged in
+setDefaults();
 
 // Register the service worker if the browser supports it.
 if ("serviceWorker" in navigator) {
