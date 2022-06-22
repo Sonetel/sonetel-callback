@@ -17,6 +17,9 @@ const MSG_ID = 'messageBox';
 // If the user is logged in, don't show the sign-in form.
 checkSignIn();
 
+// If the URL contains the number to call, set it as call2
+getUrlParam();
+
 
 // Register the service worker if the browser supports it.
 if ("serviceWorker" in navigator) {
