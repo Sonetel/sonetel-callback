@@ -9,6 +9,14 @@
 
 const API_BASE = 'https://public-api.sonetel.com';
 const AUTH_API = 'https://api.sonetel.com/SonetelAuth/beta/oauth/token';
+const MSG_ID = 'messageBox';
+
+
+// TO DO: Check if the user is connected to the internet. If not, show an error message.
+
+// If the user is logged in, don't show the sign-in form.
+checkSignIn();
+
 
 // Register the service worker if the browser supports it.
 if ("serviceWorker" in navigator) {

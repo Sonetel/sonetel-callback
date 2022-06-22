@@ -31,91 +31,198 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+
     <link rel="stylesheet" href="assets/css/sonetel.css" />
   </head>
   <body>
+    <!-- Show success or failure messages -->
+    <div
+      id="messageBox"
+      class="w3-panel w3-top w3-center w3-padding w3-hide"
+    ></div>
     <main>
       <nav>
         <div class="w3-margin w3-xxlarge sonetel-nav">
           <!-- TODO: Replace with link to production URL -->
           <div class="w3-left">
-          <a href="#">
-            <img
-              src="images/logo.png"
-              alt="Sonetel Logo"
-              class="sonetel-logo"
-            />
-          </a>
-        </div>
-        <div class="logout w3-right">
-        <span>
-            <button
-              id="logoutButton"
-              class="w3-button"
-              title="Logout"
-              onclick="logout()"
-            >
-              <i class="fa fa-sign-out" aria-hidden="true"></i>
-            </button>
-          </span>
-        </div>  
+            <a href="#">
+              <img
+                src="images/logo.png"
+                alt="Sonetel Logo"
+                class="sonetel-logo"
+              />
+            </a>
+          </div>
+          <div class="logout w3-right">
+            <span>
+              <button
+                id="logoutButton"
+                class="w3-button"
+                title="Logout"
+                onclick="logout()"
+              >
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+              </button>
+            </span>
+          </div>
         </div>
       </nav>
-      <div class="sonetel-form w3-display-middle" id="signin">
+      <div class="sonetel-form w3-display-middle w3-hide" id="signin">
         <form
-            id="loginForm"
-            method="post"
-            class="w3-container"
-            onsubmit="return login()"
-          >
-          <h2 style="margin-bottom: 32px;" class="w3-left page-title">Sign in</h2>
-            <!-- Sonetel Username -->
-            <div class="w3-row w3-section">
-              <div class="w3-rest">
-                <input
-                  class="w3-input w3-border sonetel-input"
-                  id="username"
-                  name="username"
-                  type="email"
-                  placeholder="Email"
-                  required
-                  autocomplete="on"
-                  autofocus="yes"
-                />
-              </div>
-            </div>
-            <!-- Sonetel Password -->
-            <div class="w3-row w3-section">
-              <div class="w3-rest">
-                <input
-                  class="w3-input w3-border sonetel-input"
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  required
-                  autocomplete="on"
-                />
-              </div>
-            </div>
-            <input
-              type="hidden"
-              id="grant_type"
-              name="grant_type"
-              value="password"
-            />
-            <input type="hidden" id="refresh" name="refresh" value="no" />
-            <!-- Sign in button -->
-            <p class="w3-center">
+          id="loginForm"
+          method="post"
+          class="w3-container"
+          onsubmit="return login()"
+        >
+          <h2 style="margin-bottom: 32px" class="w3-left page-title">
+            Sign in
+          </h2>
+          <!-- Sonetel Username -->
+          <div class="w3-row w3-section">
+            <div class="w3-rest">
               <input
-                type="submit"
-                class="w3-button w3-section sonetel-button w3-ripple"
-                value="Sign in"
+                class="w3-input w3-border sonetel-input"
+                id="username"
+                name="username"
+                type="email"
+                placeholder="Email"
+                required
+                autocomplete="on"
+                autofocus="yes"
               />
-              <br>
-              <a href="https://app.sonetel.com/reset-password" target="_blank" class="text-link">Reset Password</a>
+            </div>
+          </div>
+          <!-- Sonetel Password -->
+          <div class="w3-row w3-section">
+            <div class="w3-rest">
+              <input
+                class="w3-input w3-border sonetel-input"
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Password"
+                required
+                autocomplete="on"
+              />
+            </div>
+          </div>
+          <input
+            type="hidden"
+            id="grant_type"
+            name="grant_type"
+            value="password"
+          />
+          <input type="hidden" id="refresh" name="refresh" value="yes" />
+          <!-- Sign in button -->
+          <p class="w3-center">
+            <input
+              type="submit"
+              class="w3-button w3-section sonetel-button w3-ripple"
+              value="Sign in"
+            />
+            <br />
+            <a
+              href="https://app.sonetel.com/reset-password"
+              target="_blank"
+              class="text-link"
+              >Reset Password</a
+            >
+          </p>
+        </form>
+      </div>
+      <div class="sonetel-form w3-display-middle" id="makecall">
+        <form
+          id="makeCallForm"
+          method="post"
+          class="w3-container"
+          onsubmit="return call()"
+        >
+          <h2 style="margin-bottom: 32px" class="w3-left page-title">
+            Make call
+          </h2>
+          <!-- Call1 -->
+          <div class="w3-row w3-section">
+            <div class="w3-rest">
+              <label for="call1Settings" class="w3-left section-title"
+                >First call</label
+              >
+              <div class="custom-select">
+                <select
+                  name="call1Settings"
+                  id="call1Settings"
+                  onchange="checkSelectValue(this.value)"
+                  class="w3-input sonetel-input w3-border w3-margin-bottom"
+                >
+                  <option value="email">Call me via Sonetel</option>
+                  <option value="other">Call other number or address</option>
+                </select>
+              </div>
+              <input
+                class="w3-input w3-border sonetel-input w3-hide"
+                id="call1"
+                name="call1"
+                type="text"
+                placeholder="Your number"
+                required
+                autocomplete="on"
+                autofocus="yes"
+              />
+            </div>
+          </div>
+          <!-- The number to call -->
+
+          <div class="w3-section">
+          
+            <div class="w3-row">
+              <label for="call2" class="w3-left section-title">Then call this number</label>
+            </div>
+          
+            <div class="w3-row w3-rest">
+              <input
+                class="w3-input w3-border sonetel-input"
+                id="call2"
+                name="call2"
+                type="text"
+                placeholder="Number to call"
+                required
+                autocomplete="on"
+              />
+            </div>
+          
+          </div>
+
+          <!-- Call button -->
+          <p class="w3-center">
+            <input
+              type="submit"
+              class="w3-button w3-section sonetel-button w3-ripple"
+              value="Call"
+            />
+          </p>
+
+          <div class="w3-section w3-row" onselectstart="return false">
+            <p class="w3-left w3-margin-top w3-small text-link"
+              onclick="toggleSettings()">
+              Advanced Settings
+              <span class="icon-down" id="arrowhead"></span>
             </p>
-          </form>
+          </div>
+
+          <div id="settings" class="w3-hide adv-settings">
+            <div class="w3-row">
+              <label for="adv-setting" class="w3-left section-title">Caller ID</label>
+            </div>
+            <div class="w3-row">
+              <select name="callerId" id="callerId" class="w3-input sonetel-input w3-border w3-margin-bottom w3-rest">
+                <option value="automatic">Automatic</option>
+                  <option value="+12025551234">+12025551234</option>
+                  <option value="+12025551233">+12025551232</option>
+                  <option value="+12025551233">+12025551233</option>
+                  <option value="+12025551231">+12025551231</option>
+              </select>
+            </div>
+          </div>
+        </form>
       </div>
     </main>
     <script src="./assets/js/index.js"></script>
