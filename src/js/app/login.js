@@ -6,7 +6,7 @@ function login() {
   // get the token from Sonetel
   getSonetelToken().then((data) => {
 
-    // If the token creation is successful //
+    // If the token creation is successful:
 
     // 1. Store the access & refresh tokens.
     const accessToken = data["access_token"];
@@ -15,21 +15,19 @@ function login() {
     window.localStorage.setItem("refresh_token", refreshToken);
     window.localStorage.setItem('loggedIn',true);
 
-    updateAlertMessage("w3-pale-green", "<p>Login success!</p>", 1500);
-
     // 2. Decode the token and set the userID & account IDs.
     const decodedToken = decodeJwt(accessToken);
     userId = decodedToken.user_id;
     userEmail = decodedToken.user_name;
     accountId = decodedToken.acc_id;
 
-    // Prepare to set the user's preferences
+    // 3. Prepare to set the user's preferences
     userPrefCache = 'user_' + accountId + '_' + userId;
     callOneValue = userEmail;
     callOneSetting = 'email';
     userCli = 'automatic';
 
-    // Store the user's default preferences if they aren't already present.
+    // 4. Store the user's default preferences if they aren't already present.
     if(!window.localStorage.getItem(userPrefCache)){
         storeUserPref();
     }else{
@@ -37,12 +35,7 @@ function login() {
     }
     setDefaults();
 
-    /*window.localStorage.setItem('userId',userId);
-    window.localStorage.setItem('userEmail',userEmail);
-    window.localStorage.setItem('accountId',accountId);*/
-    
-
-    // Hide the login form and show the Make call UI
+    // 5. Hide the login form and show the Make call UI
     toggleDisplay("signin", "hide");
     toggleDisplay("makecall", "show");
     toggleDisplay("logoutButton", "show");
@@ -117,8 +110,8 @@ function logout() {
   window.localStorage.removeItem('accountId');
   window.localStorage.setItem('loggedIn',false);
   toggleDisplay("settings", "hide");
-  arrowElem.classList.remove("icon-up");
-  arrowElem.classList.add("icon-down");
+  document.getElementById("arrowhead").classList.remove("icon-up");
+  document.getElementById("arrowhead").classList.add("icon-down");
 
 }
 

@@ -68,7 +68,7 @@ function checkSelectValue(value) {
 // Toggle the advanced settings section
 function toggleSettings() {
   simpleToggle("settings");
-  //window.localStorage.setItem("cli", document.getElementById("callerId").value);
+  
   const arrowElem = document.getElementById("arrowhead");
   if (arrowElem.classList.contains("icon-down")) {
     arrowElem.classList.remove("icon-down");
@@ -155,23 +155,6 @@ async function checkAccessToken(access_token) {
 // Refresh the access token using the refresh_token
 async function refreshAccessToken(refresh_token) {
   //
-}
-
-async function callSonetelApi(auth,body,uri,method) {
-  
-  myHeaders = new Headers();
-  myHeaders.append("Authorization", auth);
-  const response = await fetch(uri, {
-    method: method,
-    headers: myHeaders,
-    body: body
-  });
-
-  if (response.ok) {
-    return response.json();
-  } else {
-    throw new Error(response.status);
-  }
 }
 
 // Decode the token
