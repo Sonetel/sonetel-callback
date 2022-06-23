@@ -45,7 +45,7 @@
         <div class="w3-margin w3-xxlarge sonetel-nav">
           <!-- TODO: Replace with link to production URL -->
           <div class="w3-left">
-            <a href="#">
+            <a href="/">
               <img
                 src="images/logo.png"
                 alt="Sonetel Logo"
@@ -165,7 +165,6 @@
                 placeholder="Your number"
                 required
                 autocomplete="on"
-                autofocus="yes"
               />
             </div>
           </div>
@@ -213,10 +212,10 @@
               <label for="adv-setting" class="w3-left section-title">Caller ID</label>
             </div>
             <div class="w3-row">
-              <select name="callerId" id="callerId" class="w3-input sonetel-input w3-border w3-margin-bottom w3-rest">
+              <select name="callerId" id="callerId" class="w3-input sonetel-input w3-border w3-margin-bottom w3-rest" onchange="updateCliSetting()">
                 <option value="automatic">Automatic</option>
                   <option value="+12025551234">+12025551234</option>
-                  <option value="+12025551233">+12025551232</option>
+                  <option value="+12025551232">+12025551232</option>
                   <option value="+12025551233">+12025551233</option>
                   <option value="+12025551231">+12025551231</option>
               </select>

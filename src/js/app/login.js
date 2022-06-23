@@ -1,5 +1,6 @@
 // Handle login to the app based on the username and password entered by the user
 function login() {
+
   console.log("login");
 
   // get the token from Sonetel
@@ -12,6 +13,7 @@ function login() {
     const refreshToken = data["refresh_token"];
     window.localStorage.setItem("access_token", accessToken);
     window.localStorage.setItem("refresh_token", refreshToken);
+    window.localStorage.setItem('loggedIn',true);
 
     updateAlertMessage("w3-pale-green", "<p>Login success!</p>", 1500);
 
@@ -20,23 +22,24 @@ function login() {
     userId = decodedToken.user_id;
     userEmail = decodedToken.user_name;
     accountId = decodedToken.acc_id;
+
+    // Prepare to set the user's preferences
     userPrefCache = 'user_' + accountId + '_' + userId;
+    callOneValue = userEmail;
+    callOneSetting = 'email';
+    userCli = 'automatic';
 
-    // Store the user's default preferences
+    // Store the user's default preferences if they aren't already present.
     if(!window.localStorage.getItem(userPrefCache)){
-        window.localStorage.setItem(userPrefCache,JSON.stringify({
-            "userid" : userId,
-            "accountid" : accountId,
-            "email" : userEmail,
-            "call1_setting" : "email",
-            "call1_value" : userEmail,
-            "cli" : "automatic"
-        }));
+        storeUserPref();
+    }else{
+        loadUserPref();
     }
+    setDefaults();
 
-    window.localStorage.setItem('userId',userId);
+    /*window.localStorage.setItem('userId',userId);
     window.localStorage.setItem('userEmail',userEmail);
-    window.localStorage.setItem('accountId',accountId);
+    window.localStorage.setItem('accountId',accountId);*/
     
 
     // Hide the login form and show the Make call UI
@@ -60,15 +63,32 @@ function login() {
 // Check if the user has already signed in
 function checkSignIn() {
 
+    console.log('check sign in');
+
   // If the access token is already set, don't show the login screen to the user.
   if (window.localStorage.getItem("access_token")) {
 
+    // Check if the access token is valid.
+    // If not, get new one using refresh token.
+    // If refresh token also fails, logout
+
+    // Prepare to read the user's preferences
+    const decodedToken = decodeJwt(window.localStorage.getItem("access_token"));
+    userId = decodedToken.user_id;
+    accountId = decodedToken.acc_id;
+    userPrefCache = 'user_' + accountId + '_' + userId;
+
     // TODO: Refresh the access token. If it fails, show the login screen to user.
 
-    console.log("logged in");
+    window.localStorage.setItem('loggedIn',true);
+
     // don't show the login form
     toggleDisplay("signin", "hide");
     toggleDisplay("makecall", "show");
+
+    // Load the user's preferences
+    loadUserPref();
+    setDefaults();
 
   } else {
 
@@ -80,11 +100,6 @@ function checkSignIn() {
   }
 }
 
-// Decode the token
-function decodeJwt(token) {
-  return JSON.parse(atob(token.split(".")[1]));
-}
-
 function logout() {
   
   console.log("logout()");
@@ -94,52 +109,16 @@ function logout() {
   toggleDisplay("makecall", "hide");
   toggleDisplay("logoutButton", "hide");
   
-  // Remove the access & refresh tokens from localStorage
+  // Reset the UI and the tokens
   window.localStorage.removeItem("access_token");
   window.localStorage.removeItem("refresh_token");
   window.localStorage.removeItem('userId');
   window.localStorage.removeItem('userEmail');
   window.localStorage.removeItem('accountId');
+  window.localStorage.setItem('loggedIn',false);
+  toggleDisplay("settings", "hide");
+  arrowElem.classList.remove("icon-up");
+  arrowElem.classList.add("icon-down");
 
 }
 
-async function getSonetelToken() {
-  /*
-   *
-   * Get an access token from the Sonetel API
-   *
-   * Documentation: https://docs.sonetel.com/docs/sonetel-documentation/b3A6MTUxMzg1OTc-create-token
-   *
-   */
-  simpleToggle("spinnerModal");
-
-  console.log("get token");
-
-  myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    "Basic " + btoa("sonetel-web" + ":" + "sonetel-web")
-  );
-
-  const response = await fetch(AUTH_API, {
-    method: "post",
-    headers: myHeaders,
-    body: new FormData(document.getElementById("loginForm")),
-  });
-  simpleToggle("spinnerModal");
-  if (response.ok) {
-    return response.json();
-  } else {
-    var message;
-    switch (response.status){
-        case 400:
-            message = 'Incorrect password';
-            break;
-        case 401:
-            message = 'Incorrect username';
-            break
-    }
-    //const message = `${response.status}`;
-    throw new Error(message);
-  }
-}
