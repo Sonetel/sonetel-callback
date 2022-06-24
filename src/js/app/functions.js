@@ -60,6 +60,7 @@ function checkSelectValue(value) {
   } else {
     callOneSetting = 'email';
     callOneValue = userEmail;
+    document.getElementById('call1').value = userEmail;
     toggleDisplay("call1", "hide");
   }
   storeUserPref();
@@ -150,6 +151,33 @@ async function getSonetelToken() {
 // Check if the access token is valid
 async function checkAccessToken(access_token) {
   //
+  myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "Bearer " + access_token
+  );
+  
+  const uri = API_BASE + '/account';
+  const response = await fetch(uri, {
+    method: "GET",
+    headers: myHeaders,
+  });
+  
+
+  if (response.ok) {
+    // The token is OK.
+    return true;
+
+  } else {
+
+    if(response.status == 401){
+      // refresh the access token
+      return refreshAccessToken(window.localStorage.get('refresh_token'));
+    }else if(response.status >= 500 && response.status <= 599){
+      return false;
+    }
+    
+  }
 }
 
 // Refresh the access token using the refresh_token

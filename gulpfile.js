@@ -95,4 +95,5 @@ exports.appJs = appJs;
 exports.srvJs = srvJs;
 exports.cssTask = cssTask;
 exports.updateChanges = updateChanges;
-exports.default = series(parallel(copyManifest, appJs, srvJs, cssTask, copyImg), copyHtml, updateChanges);
+exports.dev = series(parallel(copyManifest, appJs, srvJs, cssTask, copyImg), copyHtml, updateChanges);
+exports.default = series(parallel(copyManifest, appJs, srvJs, cssTask, copyImg), copyHtml);

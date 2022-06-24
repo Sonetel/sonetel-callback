@@ -65,6 +65,10 @@ function checkSignIn() {
     // If not, get new one using refresh token.
     // If refresh token also fails, logout
 
+    /*if(!checkAccessToken()){
+      //do something
+    }*/
+
     // Prepare to read the user's preferences
     const decodedToken = decodeJwt(window.localStorage.getItem("access_token"));
     userId = decodedToken.user_id;
