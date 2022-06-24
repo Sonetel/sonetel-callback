@@ -71,6 +71,7 @@ form > input{
 }
 
 .sonetel-form {
+  padding-top: 15vh !important;
   width: 336px;
 }
 
@@ -138,6 +139,11 @@ form > input{
   height: 60px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
+}
+
+.infoimage{
+  padding-top: 15px;
+  vertical-align: bottom !important;
 }
 
 /* Safari */
