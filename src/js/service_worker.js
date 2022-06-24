@@ -4,8 +4,10 @@ const staticSonetelPwa = "sonetel-callback-pwa-v1";
 const assets = [
   "/",
   "/index.html",
-  //"/sonetel.js",
-  "/assets/style.css",
+  "/assets/js/index.js",
+  "/assets/js/index.js.map",
+  "/assets/sonetel.css",
+  "/assets/sonetel.css.map",
 ];
 
 self.addEventListener("install", (installEvent) => {
