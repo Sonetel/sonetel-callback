@@ -33,8 +33,10 @@ function updateAlertMessage(colorClass, messageHtml, interval) {
 
 // Get the URL parameters
 function getUrlParam() {
-    console.log('getUrlParam()');
+
+  console.log('getUrlParam()');
   const queryString = window.location.search;
+
   if (queryString.length != 0) {
     const qParams = new URLSearchParams(queryString);
     var number2 = qParams.get("num");
@@ -44,8 +46,8 @@ function getUrlParam() {
     number2 = number2.replaceAll("%20", "");
     number2 = number2.replaceAll("%28", "");
     number2 = number2.replaceAll("%29", "");
-    document.getElementById("number2").value = number2.replaceAll(/\D/g, "");
-    return qParams.get("num");
+    document.getElementById("call2").value = number2.replaceAll(/\D/g, "");
+    //return qParams.get("num");
   }
   return "";
 }
