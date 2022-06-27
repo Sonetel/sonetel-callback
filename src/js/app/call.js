@@ -7,7 +7,7 @@ function call() {
         storeUserPref();
     }
     const call2 = document.getElementById('call2').value;
-    alert('making a call to ' + call2 + ' using caller ID ' + userCli);
+    alert('Initiate callback call between ' + callOneValue + ' and ' + call2 + ' using caller ID ' + userCli);
     // Add code to make a call
     return false;
     
