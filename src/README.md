@@ -1,4 +1,4 @@
-How to get started with development?
+## How to get started with development?
 
 1. Clone the repository locally.
 2. `cd` into the `src/` folder.
