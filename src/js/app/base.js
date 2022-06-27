@@ -1,7 +1,6 @@
 const API_BASE = 'https://api.sonetel.com';
 const AUTH_API = 'https://api.sonetel.com/SonetelAuth/beta/oauth/token';
 const MSG_ID = 'messageBox';
-window.localStorage.setItem('loggedIn',false);
 var userId = '';
 var accountId = '';
 var userEmail = '';
@@ -9,7 +8,7 @@ var callOneValue = '';
 var callOneSetting = '';
 var userCli = '';
 var userPrefCache = '';
-
+console.log("PageINIT");
 
 // TO DO: Check if the user is connected to the internet. If not, show an error message.
 //checkInternet();

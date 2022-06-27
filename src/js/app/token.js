@@ -44,54 +44,10 @@ async function getSonetelToken() {
   }
 }
 
-// Check if the access token is valid
-function checkAccessToken() {
-  console.log("Verifying access token.");
-
-  var myHeaders = new Headers();
-  myHeaders.append("Authorization", "Bearer " + localStorage.getItem("access_token"));
-  myHeaders.append("Connection", "keep-alive");
-  const requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-  };
-
-  const uri = API_BASE + "/account";
-  fetch(uri, requestOptions)
-  .then(response => {
-    if (response.ok) {
-        console.log();
-        return true;
-    }else{
-        console.log(response.body);
-        console.log("response not OK.");
-    }
-  })
-  .catch((err) => {
-    console.log("Refreshing token");
-    //console.log(err);
-    var status = refreshAccessToken();
-    return status;
-  });
-
-  
-  /*  if (response.status == 401) {
-      // If the access token has expired, try and refresh
-      return refreshAccessToken(window.localStorage.get("refresh_token"));
-    } else if (response.status >= 500 && response.status <= 599) {
-      updateAlertMessage(
-        "w3-pale-red",
-        "<p>Something went wrong. Cannot connect to Sonetel's servers.</p>",
-        5000
-      );
-    }
-  }*/
-}
-
 // Refresh the access token using the refresh_token
 async function refreshAccessToken() {
+    console.log("RefreshToken");
 
-  const refresh_token = localStorage.getItem("refresh_token");
   var myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
@@ -102,7 +58,7 @@ async function refreshAccessToken() {
   var requestBody = new URLSearchParams();
   requestBody.append("grant_type", "refresh_token");
   requestBody.append("refresh", "yes");
-  requestBody.append("refresh_token", refresh_token);
+  requestBody.append("refresh_token", localStorage.getItem("refresh_token"));
 
   const requestOptions = {
     method: "POST",

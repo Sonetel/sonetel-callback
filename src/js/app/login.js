@@ -55,21 +55,23 @@ function login() {
 
 // Check if the user has already signed in
 function checkSignIn() {
+  console.log("CheckSignIn");
 
-    console.log('check sign in');
 
   // If the access token is already set, don't show the login screen to the user.
-  if (window.localStorage.getItem("access_token") && checkAccessToken()) {
+  if (localStorage.getItem('access_token') && localStorage.getItem('loggedIn') == "true") {
+    console.log("SignedIn");
+
+
+    // Refresh the access token when the page is refreshed
+    refreshAccessToken();
 
     // Prepare to read the user's preferences
     const decodedToken = decodeJwt(window.localStorage.getItem("access_token"));
     userId = decodedToken.user_id;
+    userEmail = decodedToken.user_name;
     accountId = decodedToken.acc_id;
     userPrefCache = 'user_' + accountId + '_' + userId;
-
-    // TODO: Refresh the access token. If it fails, show the login screen to user.
-
-    window.localStorage.setItem('loggedIn',true);
 
     // don't show the login form
     toggleDisplay("signin", "hide");
@@ -79,9 +81,10 @@ function checkSignIn() {
     loadUserPref();
     setDefaults();
 
+  
   } else {
-
-    console.log("not logged in");
+    console.log("NOTSignedIn");
+    // Hide the make call UI and show the login form
     logout();
   }
 }
