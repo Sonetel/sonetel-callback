@@ -45,10 +45,11 @@ async function getSonetelToken() {
 }
 
 // Check if the access token is valid
-async function checkAccessToken(access_token) {
-  //
+function checkAccessToken() {
+  console.log("Verifying access token.");
+
   var myHeaders = new Headers();
-  myHeaders.append("Authorization", "Bearer " + access_token);
+  myHeaders.append("Authorization", "Bearer " + localStorage.getItem("access_token"));
   myHeaders.append("Connection", "keep-alive");
   const requestOptions = {
     method: "GET",
@@ -56,13 +57,25 @@ async function checkAccessToken(access_token) {
   };
 
   const uri = API_BASE + "/account";
-  const response = await fetch(uri, requestOptions);
+  fetch(uri, requestOptions)
+  .then(response => {
+    if (response.ok) {
+        console.log();
+        return true;
+    }else{
+        console.log(response.body);
+        console.log("response not OK.");
+    }
+  })
+  .catch((err) => {
+    console.log("Refreshing token");
+    //console.log(err);
+    var status = refreshAccessToken();
+    return status;
+  });
 
-  if (response.ok) {
-    // The token is OK.
-    return true;
-  } else {
-    if (response.status == 401) {
+  
+  /*  if (response.status == 401) {
       // If the access token has expired, try and refresh
       return refreshAccessToken(window.localStorage.get("refresh_token"));
     } else if (response.status >= 500 && response.status <= 599) {
@@ -72,11 +85,13 @@ async function checkAccessToken(access_token) {
         5000
       );
     }
-  }
+  }*/
 }
 
 // Refresh the access token using the refresh_token
-async function refreshAccessToken(refresh_token) {
+async function refreshAccessToken() {
+
+  const refresh_token = localStorage.getItem("refresh_token");
   var myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
@@ -101,6 +116,7 @@ async function refreshAccessToken(refresh_token) {
     const responseJson = await response.json();
     window.localStorage.setItem("access_token", responseJson["access_token"]);
     window.localStorage.setItem("refresh_token", responseJson["refresh_token"]);
+    console.log('token refreshed successfully');
     return true;
   } else {
     responseStatus = response.status;
