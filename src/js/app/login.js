@@ -59,15 +59,7 @@ function checkSignIn() {
     console.log('check sign in');
 
   // If the access token is already set, don't show the login screen to the user.
-  if (window.localStorage.getItem("access_token")) {
-
-    // Check if the access token is valid.
-    // If not, get new one using refresh token.
-    // If refresh token also fails, logout
-
-    /*if(!checkAccessToken()){
-      //do something
-    }*/
+  if (window.localStorage.getItem("access_token") && checkAccessToken()) {
 
     // Prepare to read the user's preferences
     const decodedToken = decodeJwt(window.localStorage.getItem("access_token"));
@@ -90,13 +82,11 @@ function checkSignIn() {
   } else {
 
     console.log("not logged in");
-    // show the login form
-    toggleDisplay("signin", "show");
-    toggleDisplay("makecall", "hide");
-    toggleDisplay("logoutButton", "hide");
+    logout();
   }
 }
 
+// Logout the user & reset the app display
 function logout() {
   
   console.log("logout()");
@@ -109,9 +99,6 @@ function logout() {
   // Reset the UI and the tokens
   window.localStorage.removeItem("access_token");
   window.localStorage.removeItem("refresh_token");
-  window.localStorage.removeItem('userId');
-  window.localStorage.removeItem('userEmail');
-  window.localStorage.removeItem('accountId');
   window.localStorage.setItem('loggedIn',false);
   toggleDisplay("settings", "hide");
   document.getElementById("arrowhead").classList.remove("icon-up");
