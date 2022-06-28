@@ -78,12 +78,12 @@ function srvJs() {
     .pipe(concat('service_worker.js'))
     .pipe(terser())
     .pipe(sourcemaps.write('.'))
-    .pipe(dest('public'))
+    .pipe(dest('public/assets/js'))
 }
 
 // Watch task to automatically update the files during development
 function updateChanges() {
-    return watch([appJsPath, srvJsPath, htmlPath, cssPath], { interval: 1000 }, parallel(copyHtml, cssTask, appJs, srvJs));
+    return watch([appJsPath, srvJsPath, htmlPath, cssPath], { interval: 1000 }, parallel(copyHtml ,srvJs, cssTask, appJs));
 }
 
 
