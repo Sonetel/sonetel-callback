@@ -1,8 +1,6 @@
 // Handle login to the app based on the username and password entered by the user
 function login() {
 
-  console.log("login");
-
   // get the token from Sonetel
   getSonetelToken().then((data) => {
 
@@ -13,7 +11,7 @@ function login() {
     const refreshToken = data["refresh_token"];
     window.localStorage.setItem("access_token", accessToken);
     window.localStorage.setItem("refresh_token", refreshToken);
-    window.localStorage.setItem('loggedIn',true);
+    window.localStorage.setItem('loggedIn','true');
 
     // 2. Decode the token and set the userID & account IDs.
     const decodedToken = decodeJwt(accessToken);
@@ -36,9 +34,9 @@ function login() {
     setDefaults();
 
     // 5. Hide the login form and show the Make call UI
-    toggleDisplay("signin", "hide");
-    toggleDisplay("makecall", "show");
-    toggleDisplay("logoutButton", "show");
+    toggleDisplay(SIGNIN_FORM_ID, "hide");
+    toggleDisplay(MAKECALL_FORM_ID, "show");
+    toggleDisplay(LOGOUT_BTN_ID, "show");
   })
   .catch((err) => {
 
@@ -55,13 +53,9 @@ function login() {
 
 // Check if the user has already signed in
 function checkSignIn() {
-  console.log("CheckSignIn");
-
 
   // If the access token is already set, don't show the login screen to the user.
   if (localStorage.getItem('access_token') && localStorage.getItem('loggedIn') == "true") {
-    console.log("SignedIn");
-
 
     // Refresh the access token when the page is refreshed
     refreshAccessToken();
@@ -74,8 +68,8 @@ function checkSignIn() {
     userPrefCache = 'user_' + accountId + '_' + userId;
 
     // don't show the login form
-    toggleDisplay("signin", "hide");
-    toggleDisplay("makecall", "show");
+    toggleDisplay(SIGNIN_FORM_ID, "hide");
+    toggleDisplay(MAKECALL_FORM_ID, "show");
 
     // Load the user's preferences
     loadUserPref();
@@ -83,7 +77,6 @@ function checkSignIn() {
 
   
   } else {
-    console.log("NOTSignedIn");
     // Hide the make call UI and show the login form
     logout();
   }
@@ -91,18 +84,16 @@ function checkSignIn() {
 
 // Logout the user & reset the app display
 function logout() {
-  
-  console.log("logout()");
 
   // Hide the make call UI and show the login form
-  toggleDisplay("signin", "show");
-  toggleDisplay("makecall", "hide");
-  toggleDisplay("logoutButton", "hide");
+  toggleDisplay(SIGNIN_FORM_ID, "show");
+  toggleDisplay(MAKECALL_FORM_ID, "hide");
+  toggleDisplay(LOGOUT_BTN_ID, "hide");
   
   // Reset the UI and the tokens
   window.localStorage.removeItem("access_token");
   window.localStorage.removeItem("refresh_token");
-  window.localStorage.setItem('loggedIn',false);
+  window.localStorage.setItem('loggedIn','false');
   toggleDisplay("settings", "hide");
   document.getElementById("arrowhead").classList.remove("icon-up");
   document.getElementById("arrowhead").classList.add("icon-down");

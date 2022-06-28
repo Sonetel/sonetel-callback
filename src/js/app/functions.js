@@ -14,8 +14,6 @@ function toggleDisplay(id, status) {
     elem.classList.add("w3-hide");
   } else if (status == "show") {
     elem.classList.remove("w3-hide");
-  } else {
-    console.error("unexpected value of 'show' in 'toggleDisplay()'");
   }
 }
 
@@ -34,7 +32,6 @@ function updateAlertMessage(colorClass, messageHtml, interval) {
 // Get the URL parameters
 function getUrlParam() {
 
-  console.log('getUrlParam()');
   const queryString = window.location.search;
 
   if (queryString.length != 0) {
@@ -55,15 +52,14 @@ function getUrlParam() {
 // Show a text input field is the user opts to get called via other number/address
 function checkSelectValue(value) {
 
-    console.log('checkSelectValue()');
   if (value == "other") {
-    toggleDisplay("call1", "show");
+    toggleDisplay(CALL1_ID, "show");
     callOneSetting = 'other';
   } else {
     callOneSetting = 'email';
-    callOneValue = userEmail;
-    document.getElementById('call1').value = userEmail;
-    toggleDisplay("call1", "hide");
+    //callOneValue = userEmail;
+    //document.getElementById(CALL1_ID).value = userEmail;
+    toggleDisplay(CALL1_ID, "hide");
   }
   storeUserPref();
 }
@@ -86,21 +82,20 @@ function toggleSettings() {
 function setDefaults() {
     
   // load the user's preferences
-  console.log("setDefaults()");
   if(userCli.length > 0){
     document.getElementById("callerId").value = userCli;
   }
   if(callOneSetting.length > 0){
-    document.getElementById('call1Settings').value = callOneSetting;
+    document.getElementById(CALL1_SETTINGS_ID).value = callOneSetting;
   }
   if(callOneValue.length > 0){
-    document.getElementById('call1').value = callOneValue;
+    document.getElementById(CALL1_ID).value = callOneValue;
   }
 
   if(callOneSetting == 'other'){
-    toggleDisplay("call1", "show");
+    toggleDisplay(CALL1_ID, "show");
   }else{
-    toggleDisplay("call1", "hide");
+    toggleDisplay(CALL1_ID, "hide");
   }
 
 }
@@ -125,10 +120,16 @@ function storeUserPref() {
 
 function loadUserPref() {
 
-    console.log('load user pref');
-
     userPref = JSON.parse(window.localStorage.getItem(userPrefCache));
     callOneValue = userPref.callOneValue;
     callOneSetting = userPref.callOneSetting;
     userCli = userPref.cli;
+}
+
+function genericErrorMessage(time) {
+  updateAlertMessage(
+    "w3-pale-red",
+    "<p>Something went wrong. Please try again later.</p>",
+    time
+  );
 }
