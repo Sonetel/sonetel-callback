@@ -9,8 +9,6 @@ async function getSonetelToken() {
   // Show a spinner while getting a token
   simpleToggle("spinnerModal");
 
-  console.log("get token");
-
   var myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
@@ -46,7 +44,6 @@ async function getSonetelToken() {
 
 // Refresh the access token using the refresh_token
 async function refreshAccessToken() {
-    console.log("RefreshToken");
 
   var myHeaders = new Headers();
   myHeaders.append(
@@ -72,18 +69,13 @@ async function refreshAccessToken() {
     const responseJson = await response.json();
     window.localStorage.setItem("access_token", responseJson["access_token"]);
     window.localStorage.setItem("refresh_token", responseJson["refresh_token"]);
-    console.log('token refreshed successfully');
     return true;
   } else {
     responseStatus = response.status;
     if (responseStatus == 401) {
       logout();
     } else {
-      updateAlertMessage(
-        "w3-pale-red",
-        "<p>Something went wrong. Please try again later.</p>",
-        5000
-      );
+      genericErrorMessage(5000);
       return false;
     }
   }
@@ -92,4 +84,19 @@ async function refreshAccessToken() {
 // Decode the token
 function decodeJwt(token) {
   return JSON.parse(atob(token.split(".")[1]));
+}
+
+// Check if the token has expired or will expired within 1 hour
+// Returns true if token has expired otherwise false.
+function checkTokenExpiry(token){
+  
+  const decodedToken = decodeJwt(token);
+  const currentTimeStamp = Math.floor(Date.now() / 1000);
+
+  if(decodedToken.exp - currentTimeStamp <= 3600){
+    // expired or about to expire.
+    return true;
+  }
+
+  return false;
 }
