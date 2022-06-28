@@ -58,7 +58,8 @@ function checkSignIn() {
   if (localStorage.getItem('access_token') && localStorage.getItem('loggedIn') == "true") {
 
     // Refresh the access token when the page is refreshed
-    refreshAccessToken();
+    //refreshAccessToken();
+    checkTokenExpiry();
 
     // Prepare to read the user's preferences
     const decodedToken = decodeJwt(window.localStorage.getItem("access_token"));

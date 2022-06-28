@@ -88,14 +88,24 @@ function decodeJwt(token) {
 
 // Check if the token has expired or will expired within 1 hour
 // Returns true if token has expired otherwise false.
-function checkTokenExpiry(token){
+function checkTokenExpiry(){
+  const token = localStorage.getItem('access_token');
+  console.log('check if token expired');
   
   const decodedToken = decodeJwt(token);
   const currentTimeStamp = Math.floor(Date.now() / 1000);
+  console.log(decodedToken.exp);
+  console.log(currentTimeStamp);
+  console.log(decodedToken.exp - currentTimeStamp);
 
   if(decodedToken.exp - currentTimeStamp <= 3600){
+    console.log('trying to refresh expired token');
     // expired or about to expire.
-    return true;
+    const refreshSuccess = refreshAccessToken();
+    if(!refreshSuccess){
+      genericErrorMessage(2500);
+      setTimeout(logout(),2000)
+    }
   }
 
   return false;
