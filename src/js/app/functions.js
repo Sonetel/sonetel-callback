@@ -176,8 +176,9 @@ function getCliSettings() {
   const checkToken = checkTokenExpiry();
   checkToken.then(() => {
     // Fetch the user's verified mobile numbers first
-    const uri = `${API_BASE}/account/${accid}/user/${userid}?fields=phones`;
-    fetch(uri, options)
+    const uriBase = `${API_BASE}/account/${accid}`;
+    var uriEndpoint = `/user/${userid}?fields=phones`;
+    fetch(uriBase+uriEndpoint, options)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -209,7 +210,38 @@ function getCliSettings() {
       })
       .catch((err) => console.log(err));
 
-    // TODO: Fetch the subscribed numbers that support outgoing CLI
+      // TODO: Fetch the subscribed numbers that support outgoing CLI
+      uriEndpoint = `/phonenumbersubscription?fields=submission`;
+      fetch(uriBase+uriEndpoint, options)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          genericErrorMessage(3000);
+          return false;
+        }
+      })
+      .then((json) => {
+        if (json !== false) {
+          const phoneList = json.response.filter(filterSubscribedNumbers);
+          for(ph of phoneList) {
+            const opt = document.createElement("option");
+            const ph_val = "+" +ph.phnum.trim();
+            opt.value = ph_val;
+            opt.text = ph_val;
+            //opt.id = ph_val;
+            if(cli == ph_val){
+              opt.selected = true;
+              setDefaultCli = true;
+            }
+            cliList.add(opt);
+          }
+          //
+        }
+        if(!setDefaultCli){
+          sessionStorage.setItem('userCli','automatic');
+        }
+      })
     
   });
   
@@ -217,4 +249,9 @@ function getCliSettings() {
 
 function filterVerifiedMobile(phone) {
   return phone.verified.toLowerCase() == 'yes';
+}
+
+function filterSubscribedNumbers(phone) {
+  return phone.cli_support.toLowerCase() == 'yes';
+
 }
