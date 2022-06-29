@@ -78,6 +78,18 @@ function toggleSettings() {
   }
 }
 
+function loadUserPref() {
+
+  userPref = JSON.parse(window.localStorage.getItem(userPrefCache));
+  callOneValue = userPref.callOneValue;
+  callOneSetting = userPref.callOneSetting;
+  userCli = userPref.cli;
+  window.sessionStorage.setItem("userCli",userCli)
+
+  setDefaults();
+  getCliSettings();
+
+}
 
 function setDefaults() {
     
@@ -103,6 +115,7 @@ function setDefaults() {
 // Store the updated cli setting
 function updateCliSetting() {
     userCli = document.getElementById('callerId').value;
+    window.sessionStorage.setItem("userCli",userCli);
     storeUserPref();
 }
 
@@ -114,17 +127,10 @@ function storeUserPref() {
         "email" : userEmail,
         "callOneSetting" : callOneSetting,
         "callOneValue" : callOneValue,
-        "cli" : userCli
+        "cli" : userCli.trim()
     }));
 }
 
-function loadUserPref() {
-
-    userPref = JSON.parse(window.localStorage.getItem(userPrefCache));
-    callOneValue = userPref.callOneValue;
-    callOneSetting = userPref.callOneSetting;
-    userCli = userPref.cli;
-}
 
 function genericErrorMessage(time) {
   updateAlertMessage(
@@ -132,4 +138,83 @@ function genericErrorMessage(time) {
     "<p>Something went wrong. Please try again later.</p>",
     time
   );
+}
+
+
+function getCliSettings() {
+  /* Get the phone numbers that the user is allowed to use as caller ID
+  /account/<ACCOUNT_ID>/user/<USER_ID>?fields=phones -> for verified mobile numbers
+  */
+  
+  const token = localStorage.getItem("access_token");
+  const cli = sessionStorage.getItem('userCli');
+  const decodedToken = decodeJwt(token);
+  const userid = decodedToken.user_id;
+  const accid = decodedToken.acc_id;
+  const cliList = document.getElementById("callerId");
+  const reqHeader = new Headers();
+  var setDefaultCli = false;
+  reqHeader.append("Authorization", `Bearer ${token}`);
+  reqHeader.append("Connection", "keep-alive");
+
+  // add the default automatic cli option
+  const autoCli = document.createElement("option");
+  const autoCliVal = 'automatic';
+  autoCli.value = autoCliVal;
+  autoCli.text = 'Automatic';
+  //autoCli.id = autoCliVal;
+  if(cli == 'automatic'){
+    autoCli.selected = true;
+  }
+  cliList.add(autoCli);
+  
+
+  const options = {
+    method: "GET",
+    headers: reqHeader,
+  };
+  const checkToken = checkTokenExpiry();
+  checkToken.then(() => {
+    // Fetch the user's verified mobile numbers first
+    const uri = `${API_BASE}/account/${accid}/user/${userid}?fields=phones`;
+    fetch(uri, options)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          genericErrorMessage(3000);
+          return false;
+        }
+      })
+      .then((json) => {
+        if (json !== false) {
+          const phoneList = json.response.phones.filter(filterVerifiedMobile);
+          for (const ph of phoneList) {
+            
+            const opt = document.createElement("option");
+            const ph_val = ph.phnum.trim();
+            opt.value = ph_val;
+            opt.text = ph_val;
+            //opt.id = ph_val;
+            if(cli == ph_val){
+              opt.selected = true;
+              setDefaultCli = true;
+            }
+            cliList.add(opt);
+          }
+        }
+        if(!setDefaultCli){
+          sessionStorage.setItem('userCli','automatic');
+        }
+      })
+      .catch((err) => console.log(err));
+
+    // TODO: Fetch the subscribed numbers that support outgoing CLI
+    
+  });
+  
+}
+
+function filterVerifiedMobile(phone) {
+  return phone.verified.toLowerCase() == 'yes';
 }
