@@ -94,4 +94,5 @@ function logout() {
   toggleDisplay("settings", "hide");
   document.getElementById("arrowhead").classList.remove("icon-up");
   document.getElementById("arrowhead").classList.add("icon-down");
+  document.getElementById('callerId').innerHTML = null;
 }
