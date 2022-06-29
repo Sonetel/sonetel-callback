@@ -28,6 +28,7 @@ function login() {
       if (!window.localStorage.getItem(userPrefCache)) {
         storeUserPref();
         setDefaults();
+        getCliSettings();
       } else {
         loadUserPref();
       }
