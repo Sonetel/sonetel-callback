@@ -226,7 +226,7 @@ function getCliSettings() {
           const phoneList = json.response.filter(filterSubscribedNumbers);
           for(ph of phoneList) {
             const opt = document.createElement("option");
-            const ph_val = "+" +ph.phnum.trim();
+            const ph_val = ph.phnum.trim();
             opt.value = ph_val;
             opt.text = ph_val;
             //opt.id = ph_val;
