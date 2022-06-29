@@ -21,7 +21,7 @@ getUrlParam();
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () {
     navigator.serviceWorker
-      .register("./assets/js/service_worker.js")
+      .register("./service_worker.js")
       .then((res) => console.log("Service worker registered"))
       .catch((err) => console.log("Cannot register service worker.", err));
   });

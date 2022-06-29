@@ -78,7 +78,7 @@ function srvJs() {
     .pipe(concat('service_worker.js'))
     .pipe(terser())
     .pipe(sourcemaps.write('.'))
-    .pipe(dest('public/assets/js'))
+    .pipe(dest('public'))
 }
 
 // Watch task to automatically update the files during development
