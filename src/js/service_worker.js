@@ -6,8 +6,11 @@ const assets = [
   "/index.html",
   "/assets/js/index.js",
   "/assets/js/index.js.map",
-  "/assets/sonetel.css",
-  "/assets/sonetel.css.map",
+  "/assets/css/sonetel.css",
+  "/assets/css/sonetel.css.map",
+  "https://fonts.googleapis.com/css?family=Noto+Sans:wght@300;400,500&display=swap",
+  "/images/logo.png",
+  "/images/info.png",
 ];
 
 self.addEventListener("install", (installEvent) => {
