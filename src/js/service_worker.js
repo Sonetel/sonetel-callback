@@ -1,6 +1,6 @@
 // ServiceWorker for the PWA
 
-const staticSonetelPwa = "sonetel-callback-pwa-v1";
+const staticSonetelPwa = "sonetel-callback-v1";
 const assets = [
   "/",
   "/index.html",
