@@ -6,8 +6,6 @@ The Sonetel Callback App is a progressive web app based on HTML, CSS and JavaScr
 
 - node 16+
 - npm 8.5.5+
-- gulp-cli 2.3+
-- gulp 4.0+
 
 ## Project Structure
 
