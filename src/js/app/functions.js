@@ -1,3 +1,4 @@
+
 function simpleToggle(id) {
   const elem = document.getElementById(id);
   if (elem.classList.contains("w3-hide")) {
@@ -177,7 +178,7 @@ function getCliSettings() {
   checkToken.then(() => {
     // Fetch the user's verified mobile numbers first
     const uriBase = `${API_BASE}/account/${accid}`;
-    var uriEndpoint = `/user/${userid}?fields=phones`;
+    var uriEndpoint = `/user/${userid}?fields=phones%2Clocation`;
     fetch(uriBase+uriEndpoint, options)
       .then((response) => {
         if (response.ok) {
@@ -189,19 +190,28 @@ function getCliSettings() {
       })
       .then((json) => {
         if (json !== false) {
-          const phoneList = json.response.phones.filter(filterVerifiedMobile);
+          const response = json.response;
+          const phoneList = response.phones.filter(filterVerifiedMobile);
+          const userCountry = response.location.country || "-";
           for (const ph of phoneList) {
             
+            
             const opt = document.createElement("option");
-            const ph_val = ph.phnum.trim();
-            opt.value = ph_val;
-            opt.text = ph_val;
-            //opt.id = ph_val;
-            if(cli == ph_val){
-              opt.selected = true;
-              setDefaultCli = true;
-            }
-            cliList.add(opt);
+            const phoneNumE164 = ph.phnum.trim();
+            
+            const formattedNumber = formatMobileNumber(phoneNumE164,userCountry);
+
+            formattedNumber.then( (resolvedValue) => {
+              opt.value = phoneNumE164;
+              opt.text = resolvedValue;
+
+              if(cli == phoneNumE164){
+                opt.selected = true;
+                setDefaultCli = true;
+              }
+              cliList.add(opt);
+            });
+
           }
         }
         if(!setDefaultCli){
@@ -226,10 +236,10 @@ function getCliSettings() {
           const phoneList = json.response.filter(filterSubscribedNumbers);
           for(phone of phoneList) {
             const opt = document.createElement("option");
-            const formattedPhoneNumber = formatNumber(phone.phnum.trim(),phone.area_code,phone.country_code);
-            opt.value = phone.phnum.trim();
-            opt.text = formattedPhoneNumber;
-            if(cli == formattedPhoneNumber){
+            const e164Number = phone.phnum.trim();
+            opt.value = e164Number;
+            opt.text = formatNumber(e164Number,phone.area_code,phone.country_code);
+            if(cli == e164Number){
               opt.selected = true;
               setDefaultCli = true;
             }
@@ -244,6 +254,20 @@ function getCliSettings() {
     
   });
   
+}
+
+async function formatMobileNumber(e164Number,userCountry){
+  const uri = `https://api.sonetel.com${GEOLOOKUP_URI}?country=${userCountry}&phone-numbers=${e164Number}`;
+
+  const response = await fetch(uri);
+  if(response.ok){
+    const json = await response.json();
+    return json.response[0].formats["international"];
+    
+  }else{
+    return e164Number;
+  }
+
 }
 
 function formatNumber(e164Number,area_code,country_code) {
