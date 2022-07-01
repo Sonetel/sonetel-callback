@@ -32,3 +32,10 @@ For development, to ensure the site is updated when you make changes to the code
 $ npx gulp dev
 ```
 This will update the files under the `public/` folder whenever you update the files in `src/`.
+
+**Note:**
+
+While releasing a new version of the app, the following points should be noted.
+
+1. Increment the version number in `package.json`, `package.lock` and `src/js/app/const.js`
+2. Change the cache version number in `src/js/service_worker.js`.
