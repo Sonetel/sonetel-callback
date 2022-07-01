@@ -23,6 +23,13 @@ checkSignIn();
 // If the URL contains the number to call, set it as call2
 getUrlParam();
 
+/*
+If there's an updated service worker available,
+let the user refresh the page and activate 
+the updated service worker.
+
+Source: https://github.com/deanhume/pwa-update-available
+*/
 // When user clicks on reload, activate the new service worker
 document.getElementById(NOTIF_RELOAD_ID).addEventListener("click", function () {
   newWorker.postMessage({ action: "skipWaiting" });
@@ -41,7 +48,7 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () {
     navigator.serviceWorker
       .register("./service_worker.js")
-      .then((reg) => {
+      .then(reg => {
         console.log("Service worker: Registered");
 
         reg.addEventListener("updatefound", () => {
@@ -50,8 +57,10 @@ if ("serviceWorker" in navigator) {
             switch (newWorker.state) {
               case "installed":
                 // New service worker available, show notification.
+                if (navigator.serviceWorker.controller) {
                 toggleDisplay(NOTIF_CONTAINER_ID, "show");
                 console.log("Service worker: Updated. Reload page.");
+                }
                 break;
             }
           });
