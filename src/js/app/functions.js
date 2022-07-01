@@ -210,7 +210,7 @@ function getCliSettings() {
       })
       .catch((err) => console.log(err));
 
-      // TODO: Fetch the subscribed numbers that support outgoing CLI
+      // Fetch the subscribed numbers that support outgoing CLI
       uriEndpoint = `/phonenumbersubscription?fields=submission`;
       fetch(uriBase+uriEndpoint, options)
       .then((response) => {
@@ -224,13 +224,12 @@ function getCliSettings() {
       .then((json) => {
         if (json !== false) {
           const phoneList = json.response.filter(filterSubscribedNumbers);
-          for(ph of phoneList) {
+          for(phone of phoneList) {
             const opt = document.createElement("option");
-            const ph_val = ph.phnum.trim();
-            opt.value = ph_val;
-            opt.text = ph_val;
-            //opt.id = ph_val;
-            if(cli == ph_val){
+            const formattedPhoneNumber = formatNumber(phone.phnum.trim(),phone.area_code,phone.country_code);
+            opt.value = phone.phnum.trim();
+            opt.text = formattedPhoneNumber;
+            if(cli == formattedPhoneNumber){
               opt.selected = true;
               setDefaultCli = true;
             }
@@ -245,6 +244,12 @@ function getCliSettings() {
     
   });
   
+}
+
+function formatNumber(e164Number,area_code,country_code) {
+  let telNumber = e164Number.substring(country_code.length);
+  telNumber = telNumber.substring(area_code.length);
+  return `+${country_code} ${area_code} ${telNumber}`;
 }
 
 function filterVerifiedMobile(phone) {
