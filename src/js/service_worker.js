@@ -21,7 +21,7 @@ const assets = [
 self.addEventListener("install", installEvent => {
   installEvent.waitUntil(
     caches.open(staticSonetelPwa).then(cache => {
-      console.log('caching assets');
+      //console.log('caching assets');
       cache.addAll(assets);
     })
   );
@@ -31,7 +31,11 @@ self.addEventListener("install", installEvent => {
 self.addEventListener("activate", activateEvent => {
   activateEvent.waitUntil(
     caches.keys().then(keys => {
-      console.log(keys);
+      //console.log(keys);
+      return Promise.all(keys
+        .filter(key => key !== staticSonetelPwa)
+        .map(key => caches.delete(key))
+        )
     })
   );
 
