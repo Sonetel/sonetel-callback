@@ -5,6 +5,7 @@ const APP_VERSION = '1.0.0';
 const API_BASE = 'https://public-api.sonetel.com';
 const AUTH_API = 'https://api.sonetel.com/SonetelAuth/beta/oauth/token';
 const CALLBACK_URI = '/make-calls/call/call-back';
+const GEOLOOKUP_URI = '/geo-location/phonenumber';
 
 // Element IDs
 const MSG_ID = 'messageBox';
