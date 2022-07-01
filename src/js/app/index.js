@@ -1,12 +1,18 @@
-console.log("=====================\nSonetel Callback App " + APP_VERSION + "\n=====================");
+console.log(
+  "=====================\nSonetel Callback App " +
+    APP_VERSION +
+    "\n====================="
+);
 
-var userId = '';
-var accountId = '';
-var userEmail = '';
-var callOneValue = '';
-var callOneSetting = '';
-var userCli = '';
-var userPrefCache = '';
+var userId = "";
+var accountId = "";
+var userEmail = "";
+var callOneValue = "";
+var callOneSetting = "";
+var userCli = "";
+var userPrefCache = "";
+let newWorker;
+let refreshing = false;
 
 // TO DO: Check if the user is connected to the internet. If not, show an error message.
 //checkInternet();
@@ -17,12 +23,40 @@ checkSignIn();
 // If the URL contains the number to call, set it as call2
 getUrlParam();
 
+// When user clicks on reload, activate the new service worker
+document.getElementById(NOTIF_RELOAD_ID).addEventListener("click", function () {
+  newWorker.postMessage({ action: "skipWaiting" });
+});
+
+// The event listener that is fired when the service worker updates
+// Here we reload the page
+navigator.serviceWorker.addEventListener("controllerchange", function () {
+  if (refreshing) return;
+  window.location.reload();
+  refreshing = true;
+});
+
 // Register service worker for the PWA
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () {
     navigator.serviceWorker
       .register("./service_worker.js")
-      .then((res) => console.log("Service worker registered"))
-      .catch((err) => console.log("Cannot register service worker.", err));
+      .then((reg) => {
+        console.log("Service worker: Registered");
+
+        reg.addEventListener("updatefound", () => {
+          newWorker = reg.installing;
+          newWorker.addEventListener("statechange", () => {
+            switch (newWorker.state) {
+              case "installed":
+                // New service worker available, show notification.
+                toggleDisplay(NOTIF_CONTAINER_ID, "show");
+                console.log("Service worker: Updated. Reload page.");
+                break;
+            }
+          });
+        });
+      })
+      .catch((err) => console.error("Service worker: Failed to register", err));
   });
 }

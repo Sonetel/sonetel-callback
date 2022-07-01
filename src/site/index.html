@@ -222,11 +222,18 @@
         </form>
       </div>
     </main>
-    <script src="./assets/js/index.js"></script>
+    <!-- Spinner -->
     <div id="spinnerModal" class="modal w3-hide">
       <div class="modal-content">
         <div class="loader"></div>
       </div>
     </div>
+    <!-- Service Worker update notification -->
+    <div id="update-notif" class="update-notif w3-hide">
+      <div class="update-notif-container">
+        <p>A new version of this app is available. <a class="text-link" id="notif-reload">Update now</a>.</p>
+      </div>
+    </div>
+    <script src="./assets/js/index.js"></script>
   </body>
 </html>

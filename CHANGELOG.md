@@ -12,3 +12,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Control the caller ID shown to person called
 - Control how to receive calls
 - Save user's call preferences locally
+- Cache assets
+- Service worker update notification

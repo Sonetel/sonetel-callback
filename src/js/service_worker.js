@@ -1,6 +1,6 @@
 // ServiceWorker for the PWA
 
-const staticSonetelPwa = "sonetel-callback-v1";
+const staticSonetelPwa = "sonetel-callback-v0";
 const assets = [
   "/",
   "/index.html",
@@ -49,4 +49,11 @@ self.addEventListener("fetch", (fetchEvent) => {
       return res || fetch(fetchEvent.request);
     })
   );
+});
+
+// Listen to the update event
+self.addEventListener('message', function (event) {
+  if(event.data.action == 'skipWaiting'){
+    this.self.skipWaiting();
+  }
 });
