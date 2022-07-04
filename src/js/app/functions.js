@@ -261,6 +261,11 @@ function getCliSettings() {
 }
 
 async function formatMobileNumber(e164Number,userCountry){
+
+  // If user country is not defined, return the unformatted number.
+  if(userCountry == '-'){
+    return e164Number;
+  }
   const uri = `https://api.sonetel.com${GEOLOOKUP_URI}?country=${userCountry}&phone-numbers=${e164Number}`;
 
   const response = await fetch(uri);
