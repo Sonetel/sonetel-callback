@@ -143,8 +143,10 @@ function genericErrorMessage(time) {
 
 
 function getCliSettings() {
-  /* Get the phone numbers that the user is allowed to use as caller ID
-  /account/<ACCOUNT_ID>/user/<USER_ID>?fields=phones -> for verified mobile numbers
+  /* 
+  Get the phone numbers that the user is allowed to use as caller ID
+  1. Verified mobile numbers added for call forwarding
+  2. Phone numbers purchased via Sonetel that can be used as caller ID.
   */
   
   const token = localStorage.getItem("access_token");
@@ -163,22 +165,24 @@ function getCliSettings() {
   const autoCliVal = 'automatic';
   autoCli.value = autoCliVal;
   autoCli.text = 'Automatic';
-  //autoCli.id = autoCliVal;
+
   if(cli == 'automatic'){
     autoCli.selected = true;
   }
   cliList.add(autoCli);
   
-
+  // Fetch options
   const options = {
     method: "GET",
     headers: reqHeader,
   };
   const checkToken = checkTokenExpiry();
   checkToken.then(() => {
+
     // Fetch the user's verified mobile numbers first
     const uriBase = `${API_BASE}/account/${accid}`;
     var uriEndpoint = `/user/${userid}?fields=phones%2Clocation`;
+
     fetch(uriBase+uriEndpoint, options)
       .then((response) => {
         if (response.ok) {
@@ -227,7 +231,7 @@ function getCliSettings() {
         if (response.ok) {
           return response.json();
         } else {
-          genericErrorMessage(3000);
+          updateAlertMessage("w3-pale-red", "<p>Unable to get caller ID settings. Please refresh the page to try again.</p>", 4000);
           return false;
         }
       })
