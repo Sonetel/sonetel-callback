@@ -1,6 +1,8 @@
 // ServiceWorker for the PWA
 
-const staticSonetelPwa = "sonetel-callback-v1";
+// Cache version. Increment when a change is made to any of the cached assets.
+const staticCache = "static-v1";
+
 const assets = [
   "/",
   "/index.html",
@@ -20,7 +22,7 @@ const assets = [
 // Install the service worker
 self.addEventListener("install", installEvent => {
   installEvent.waitUntil(
-    caches.open(staticSonetelPwa).then(cache => {
+    caches.open(staticCache).then(cache => {
       //console.log('caching assets');
       cache.addAll(assets);
     })
@@ -33,7 +35,7 @@ self.addEventListener("activate", activateEvent => {
     caches.keys().then(keys => {
       //console.log(keys);
       return Promise.all(keys
-        .filter(key => key !== staticSonetelPwa)
+        .filter(key => key !== staticCache)
         .map(key => caches.delete(key))
         )
     })
@@ -43,7 +45,7 @@ self.addEventListener("activate", activateEvent => {
 
 
 // fetch event
-self.addEventListener("fetch", (fetchEvent) => {
+self.addEventListener("fetch", fetchEvent => {
   fetchEvent.respondWith(
     caches.match(fetchEvent.request).then(res => {
       return res || fetch(fetchEvent.request);
