@@ -15,6 +15,9 @@ The Sonetel Callback App is a progressive web app based on HTML, CSS and JavaScr
 # Get started
 
 - Clone the repository.
+```
+$ git clone https://github.com/Sonetel/sonetel-callback.git
+```
 - Install the dependencies
 ```
 $ npm install

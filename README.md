@@ -1,6 +1,6 @@
 <br />
 <div align="center">
-  <a href="https://github.com/aashish-joshi/Sonetel-Callback-App">
+  <a href="https://github.com/Sonetel/sonetel-callback/">
     <img src="https://dl.dropboxusercontent.com/s/hn4o0v378od1aoo/logo_white_background.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -10,7 +10,7 @@
     A progressive web app that uses Sonetel's APIs to make callback calls.
     <br />
     <br />
-    <a href="https://sonetel.netlify.app/">View Demo</a>
+    <a href="https://sonetelcallback.netlify.app/">View Demo</a>
     ·
     <a href="https://sonetel.com/en/developer?utm_source=sonetel&utm_medium=click&utm_campaign=github_opensource&utm_term=callbackapp&utm_content=readme">Sonetel Developer API</a>
     .
@@ -20,17 +20,17 @@
 <br>
 <hr />
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/ceba151a-d9a2-4aaf-bfd3-9aac08cf8d10/deploy-status)](https://app.netlify.com/sites/sonetel/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/20a57c88-f9cf-41f6-9127-44dd3b1190b8/deploy-status)](https://app.netlify.com/sites/sonetelcallback/deploys)
 
 <h2>Get Started</h2>
 
-This is a progressive web app for using Sonetel's APIs to make callback calls. To use the app visit: https://sonetel.netlify.app/.
+This is a progressive web app for using Sonetel's APIs to make callback calls. To use the app visit: https://sonetelcallback.netlify.app/.
 
 You will need a <a href="https://sonetel.com/en/sign-up?utm_source=sonetel&utm_medium=click&utm_campaign=github_opensource&utm_term=callbackapp&utm_content=readme">free Sonetel account</a>.
 
 <strong>Install</strong>
 
-From your browser, go to https://sonetel.netlify.app/. On compatible browsers you will see a button to install the app on your device.
+From your browser, go to https://sonetelcallback.netlify.app/. On compatible browsers you will see a button to install the app on your device.
 
 <img src="https://dl.dropboxusercontent.com/s/bfxrhx65z9dy1rh/install_app.png" alt="install app" width="250px">
 
