@@ -17,6 +17,7 @@ const MAKECALL_FORM_ID = "makecall";
 const LOGOUT_BTN_ID = "logoutButton";
 const NOTIF_RELOAD_ID = "notif-reload";
 const NOTIF_CONTAINER_ID = "update-notif";
+const INSTALL_PROMPT_CLOSE_BTN = 'installPromptCloseBtn';
 
 // Messages
 const CALL_SUCCESS_MSG = "<p><strong>Success</strong>. Your call will be connected soon.</p>";
