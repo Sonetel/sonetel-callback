@@ -183,20 +183,57 @@ form > input{
 /* update notification css start*/
 .update-notif {
   position: fixed;
-  top: 20px;
-  right: 20px;
-  margin-left: 20px;
-  max-width: 33%;
+  top: 15px;
+  right: 15px;
+  margin-left: 25px;
+  max-width: 43%; 
+  cursor: pointer;
+  text-align: center;
 }
 
 .update-notif-container {
-  padding: 10px;
+  padding: 20px;
   background-color: #68d0d0;
   color: black;
-  opacity: .75;
+  opacity: .50;
   border-radius: 4px;
+  font-size: smaller;
+}
+
+.update-notif-container:hover{
+  opacity: .75;
 }
 /* update notification css end*/
+
+.closebtn {
+  padding: 0% 10%;
+  font-size: 16px;
+  font-weight: bold;
+  float: right;
+  cursor: pointer;
+  transition: 0.3s;
+  /* vertical-align: middle; */
+  line-height: normal;
+  height: 100%;
+}
+
+
+.closebtn:hover {
+  color: red;
+}
+
+.install-notif{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 35px;
+  font-size: 1rem;
+  text-align: center;
+  padding-top: 7.5px;
+  cursor: pointer;
+  background-color: #68d0d0;
+}
 
 @media screen and (max-width: 768px) {
   .sonetel-input{
@@ -215,5 +252,36 @@ form > input{
     outline: none;
     margin-top: 64px;
     margin-right: 64px;
+  }
+
+  .install-notif{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    font-size: 1rem;
+    text-align: center;
+    padding-top: 15px;
+    cursor: pointer;
+    background-color: #68d0d0;
+    opacity: 0.5;
+  }
+
+  .install-notif:hover{
+    opacity: 1;
+  }
+
+  .closebtn {
+    padding: 0% 5%;
+    font-size: 18px;
+    font-weight: bold;
+    float: right;
+    cursor: pointer;
+    transition: 0.3s;
+    vertical-align: middle;
+    line-height: normal;
+    height: 100%;
+    font-weight: 600;
   }
 }

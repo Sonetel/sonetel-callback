@@ -230,9 +230,15 @@
     </div>
     <!-- Service Worker update notification -->
     <div id="update-notif" class="update-notif w3-hide">
-      <div class="update-notif-container">
-        <p>A new version of this app is available. <a class="text-link" id="notif-reload">Update now</a>.</p>
+      <div id="notif-reload" class="update-notif-container">
+        <p>A new version of this app is available. Update now.</p>
       </div>
+    </div>
+
+    <!-- App Install Prompt -->
+    <div id="install-notif" class="install-notif w3-hide">
+      <span id="installPromptCloseBtn" class="closebtn">&times;</span>
+      <span id="appInstallBtn">Install the app to use all its features.</span>
     </div>
     <script src="./assets/js/index.js"></script>
   </body>
