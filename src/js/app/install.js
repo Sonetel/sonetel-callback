@@ -1,3 +1,13 @@
+/**
+ * Show a custom installation prompt to the user.
+ * 
+ * Capture the beforeinstallprompt event and use that 
+ * to show the custom app installation prompt.
+ * 
+ * When the user clicks on the custom prompt, they
+ * see the actual prompt (and the custom prompt is hidden).
+ * 
+ */
 // Initialize the deferred install prompt to be used later
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -9,20 +19,15 @@ window.addEventListener('beforeinstallprompt', (e) => {
   if(window.localStorage.getItem('installPrompt') != 'dismissed'){
     showInstallPromotion();
   }
-  // Optionally, send analytics event that PWA install promo was shown.
-  console.log(`'beforeinstallprompt' event was fired.`);
 });
 
 function showInstallPromotion(){
-    //document.getElementById(NOTIF_CONTAINER_ID).innerHTML=INSTALL_PROMPT;
-    toggleDisplay('install-notif', "show");
-    setTimeout(function () {
-        toggleDisplay('install-notif', "hide");
-    },10000);
-    console.log('install prompt');
+  if(isMobile.phone){
+    return ;
+  }
+  toggleDisplay('install-notif', "show");
 }
 
 document.getElementById(INSTALL_PROMPT_CLOSE_BTN).addEventListener('click',() => {
-    dismissPrompt('dismissed');
     toggleDisplay('install-notif', "hide");
 });

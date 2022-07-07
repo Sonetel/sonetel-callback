@@ -82,7 +82,8 @@ document.getElementById('appInstallBtn').addEventListener('click', async () => {
   const { outcome } = await deferredPrompt.userChoice;
 
   // Store the user's preference.
-  dismissPrompt(outcome);
+  //dismissPrompt(outcome);
+  toggleDisplay('install-notif', "hide");
   deferredPrompt = null;
 });
 
