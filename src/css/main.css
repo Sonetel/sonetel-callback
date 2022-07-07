@@ -183,7 +183,7 @@ form > input{
 /* update notification css start*/
 .update-notif {
   position: fixed;
-  top: 15px;
+  bottom: 15px;
   right: 15px;
   margin-left: 25px;
   max-width: 43%; 
@@ -206,15 +206,10 @@ form > input{
 /* update notification css end*/
 
 .closebtn {
-  padding: 0% 10%;
-  font-size: 16px;
-  font-weight: bold;
-  float: right;
+  font-weight: 600;
   cursor: pointer;
   transition: 0.3s;
-  /* vertical-align: middle; */
-  line-height: normal;
-  height: 100%;
+  padding: 0px 16px !important;
 }
 
 
@@ -230,9 +225,13 @@ form > input{
   height: 35px;
   font-size: 1rem;
   text-align: center;
-  padding-top: 7.5px;
   cursor: pointer;
-  background-color: #68d0d0;
+}
+
+.sonetel-panel{
+  line-height: 30px !important;
+  height: 30px !important;
+  /* font-size: 1rem; */
 }
 
 @media screen and (max-width: 768px) {
@@ -259,29 +258,15 @@ form > input{
     top: 0;
     left: 0;
     right: 0;
-    height: 50px;
-    font-size: 1rem;
     text-align: center;
-    padding-top: 15px;
     cursor: pointer;
-    background-color: #68d0d0;
-    opacity: 0.5;
-  }
-
-  .install-notif:hover{
-    opacity: 1;
   }
 
   .closebtn {
-    padding: 0% 5%;
-    font-size: 18px;
-    font-weight: bold;
-    float: right;
+    font-weight: 600;
     cursor: pointer;
     transition: 0.3s;
     vertical-align: middle;
-    line-height: normal;
-    height: 100%;
-    font-weight: 600;
+    padding: 0px 16px !important;
   }
 }
