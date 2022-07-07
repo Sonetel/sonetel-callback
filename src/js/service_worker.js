@@ -1,7 +1,7 @@
 // ServiceWorker for the PWA
 
 // Cache version. Increment when a change is made to any of the cached assets.
-const staticCache = "static-v1";
+const staticCache = "static-v2";
 
 const assets = [
   "/",
@@ -14,6 +14,7 @@ const assets = [
   "https://fonts.gstatic.com/s/notosans/v27/o-0NIpQlx3QUlC5A4PNjFhdVZNyB.woff2",
   "https://fonts.gstatic.com/s/notosans/v27/o-0NIpQlx3QUlC5A4PNjFhdVatyB1Wk.woff2",
   "https://fonts.gstatic.com/s/notosans/v27/o-0IIpQlx3QUlC5A4PNr5TRA.woff2",
+  "https://cdn.jsdelivr.net/npm/ismobilejs@1/dist/isMobile.min.js",
   "https://fonts.gstatic.com/s/notosans/v27/o-0IIpQlx3QUlC5A4PNr6zRAW_0.woff2",
   "/images/logo.png",
   "/images/info.png"
