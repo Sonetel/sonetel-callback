@@ -5,6 +5,7 @@ function call() {
     regenerate the token.
     */
 
+  simpleToggle("spinnerModal");
   const checkToken = checkTokenExpiry();
   checkToken.then(() => {
     const call1 = document.getElementById(CALL1_ID).value;
@@ -41,6 +42,7 @@ function call() {
 
     fetch(uri, options)
       .then((response) => {
+        simpleToggle("spinnerModal");
         if (response.ok) {
           return response.json();
         } else {
