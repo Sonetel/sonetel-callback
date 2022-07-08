@@ -58,8 +58,8 @@ if ("serviceWorker" in navigator) {
               case "installed":
                 // New service worker available, show notification.
                 if (navigator.serviceWorker.controller) {
-                toggleDisplay(NOTIF_CONTAINER_ID, "show");
-                console.log("Service worker: Updated. Reload page.");
+                  toggleDisplay(NOTIF_CONTAINER_ID, "show");
+                  console.log("Service worker: Updated. Reload page.");
                 }
                 break;
             }
@@ -68,4 +68,26 @@ if ("serviceWorker" in navigator) {
       })
       .catch((err) => console.error("Service worker: Failed to register", err));
   });
+}
+
+
+document.getElementById('appInstallBtn').addEventListener('click', async () => {
+  // Hide the install notification
+  toggleDisplay('install-notif', "hide");
+
+  // Show the install prompt
+  deferredPrompt.prompt();
+
+  // Wait for the user to respond to the prompt
+  const { outcome } = await deferredPrompt.userChoice;
+
+  // Store the user's preference.
+  //dismissPrompt(outcome);
+  toggleDisplay('install-notif', "hide");
+  deferredPrompt = null;
+});
+
+function dismissPrompt(outcome){
+  window.localStorage.setItem('installPrompt',outcome);
+  window.localStorage.setItem('installPromptSetTimestamp',+new Date());
 }
