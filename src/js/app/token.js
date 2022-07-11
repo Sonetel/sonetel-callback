@@ -24,27 +24,30 @@ async function getSonetelToken() {
   //Hide the spinner once we get the response
   simpleToggle("spinnerModal");
 
-  if (response.ok) {
+  let message = "An error has ocurred. Please try again.";
+
+  try {
     const responseJson = await response.json();
-    return responseJson;
-  } else {
-    var message;
-    switch (response.status) {
-      case 400:
-        message = "Incorrect password";
-        break;
-      case 401:
-        message = "Incorrect username";
-        break;
+
+    if (response.ok) {
+      return responseJson;
+    } else {
+      switch (response.status) {
+        case 400:
+        case 401:
+          message = responseJson.error_description;
+          break;
+      }
+      throw new Error(message);
     }
-    //const message = `${response.status}`;
+  } catch (err) {
+    console.error(err);
     throw new Error(message);
   }
 }
 
 // Refresh the access token using the refresh_token
 async function refreshAccessToken() {
-
   var myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
@@ -88,19 +91,18 @@ function decodeJwt(token) {
 
 // Check if the token has expired or will expired within 1 hour
 // Returns true if token has expired otherwise false.
-async function checkTokenExpiry(){
-  const token = localStorage.getItem('access_token');
-    
-  const decodedToken = decodeJwt(token);
-  const currentTimeStamp = Math.floor(Date.now() / 1000); 
+async function checkTokenExpiry() {
+  const token = localStorage.getItem("access_token");
 
-  if(decodedToken.exp - currentTimeStamp <= 3600){
-    
+  const decodedToken = decodeJwt(token);
+  const currentTimeStamp = Math.floor(Date.now() / 1000);
+
+  if (decodedToken.exp - currentTimeStamp <= 3600) {
     // expired or about to expire.
     const refreshSuccess = await refreshAccessToken();
-    if(!refreshSuccess){
+    if (!refreshSuccess) {
       genericErrorMessage(2500);
-      setTimeout(logout(),2000)
+      setTimeout(logout(), 2000);
     }
   }
 
