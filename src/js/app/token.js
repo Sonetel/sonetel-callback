@@ -7,26 +7,29 @@
  */
 async function getSonetelToken() {
   // Show a spinner while getting a token
-  simpleToggle("spinnerModal");
+  simpleToggle(SPINNER_ID);
 
-  var myHeaders = new Headers();
-  myHeaders.append(
+  let message = "An error has ocurred. Please try again.";
+  let myHeaders = new Headers();
+
+    myHeaders.append(
     "Authorization",
     "Basic " + btoa("sonetel-web" + ":" + "sonetel-web")
   );
   myHeaders.append("Connection", "keep-alive");
 
-  const response = await fetch(AUTH_API, {
-    method: "post",
-    headers: myHeaders,
-    body: new FormData(document.getElementById("loginForm")),
-  });
-  //Hide the spinner once we get the response
-  simpleToggle("spinnerModal");
-
-  let message = "An error has ocurred. Please try again.";
-
   try {
+
+    const response = await fetch(AUTH_API, {
+      method: "post",
+      headers: myHeaders,
+      body: new FormData(document.getElementById("loginForm")),
+    });
+  
+    //Hide the spinner once we get the response
+    simpleToggle(SPINNER_ID);
+
+
     const responseJson = await response.json();
 
     if (response.ok) {
@@ -41,6 +44,7 @@ async function getSonetelToken() {
       throw new Error(message);
     }
   } catch (err) {
+    toggleDisplay(SPINNER_ID, 'hide');
     console.error(err);
     throw new Error(message);
   }
