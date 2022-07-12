@@ -5,7 +5,7 @@ function call() {
     regenerate the token.
     */
 
-  simpleToggle("spinnerModal");
+  toggleDisplay(SPINNER_ID, 'show');
   const checkToken = checkTokenExpiry();
   checkToken.then(() => {
     const call1 = document.getElementById(CALL1_ID).value;
@@ -42,7 +42,7 @@ function call() {
 
     fetch(uri, options)
       .then((response) => {
-        simpleToggle("spinnerModal");
+        toggleDisplay(SPINNER_ID, 'hide');
         if (response.ok) {
           return response.json();
         } else {
@@ -65,7 +65,11 @@ function call() {
           updateAlertMessage("w3-pale-green", CALL_SUCCESS_MSG, 3000);
         }
       })
-      .catch((err) => console.log("Request Failed", err));
+      .catch((err) => {
+        console.log("Request Failed", err);
+        genericErrorMessage(5000);
+        toggleDisplay(SPINNER_ID, 'hide');
+      });
   });
 
   return false;
