@@ -52,14 +52,14 @@ async function getSonetelToken() {
 
 // Refresh the access token using the refresh_token
 async function refreshAccessToken() {
-  var myHeaders = new Headers();
+  let myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
     "Basic " + btoa("sonetel-web" + ":" + "sonetel-web")
   );
   myHeaders.append("Connection", "keep-alive");
 
-  var requestBody = new URLSearchParams();
+  let requestBody = new URLSearchParams();
   requestBody.append("grant_type", "refresh_token");
   requestBody.append("refresh", "yes");
   requestBody.append("refresh_token", localStorage.getItem("refresh_token"));
@@ -70,21 +70,27 @@ async function refreshAccessToken() {
     body: requestBody,
   };
 
-  const response = await fetch(AUTH_API, requestOptions);
-
-  if (response.ok) {
-    const responseJson = await response.json();
-    window.localStorage.setItem("access_token", responseJson["access_token"]);
-    window.localStorage.setItem("refresh_token", responseJson["refresh_token"]);
-    return true;
-  } else {
-    responseStatus = response.status;
-    if (responseStatus == 401) {
-      logout();
+  try {
+    const response = await fetch(AUTH_API, requestOptions);
+  
+    if (response.ok) {
+      const responseJson = await response.json();
+      window.localStorage.setItem("access_token", responseJson["access_token"]);
+      window.localStorage.setItem("refresh_token", responseJson["refresh_token"]);
+      return true;
     } else {
-      genericErrorMessage(5000);
-      return false;
+      responseStatus = response.status;
+      if (responseStatus == 401) {
+        logout();
+      } else {
+        genericErrorMessage(5000);
+        return false;
+      }
     }
+    
+  } catch (error) {
+    logout();
+    genericErrorMessage(5000);
   }
 }
 
