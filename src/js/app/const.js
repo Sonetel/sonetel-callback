@@ -1,9 +1,9 @@
 
-const APP_VERSION = '1.0.1';
+const APP_VERSION = '1.0.2';
 
 // API URIs
-const API_BASE = 'https://public-api.sonetel.com';
-const AUTH_API = 'https://api.sonetel.com/SonetelAuth/beta/oauth/token';
+const API_BASE = 'https://chat-api.sonetel.com';
+const AUTH_API = 'https://chat-api.sonetel.com/SonetelAuth/1.3/oauth/token';
 const CALLBACK_URI = '/make-calls/call/call-back';
 const GEOLOOKUP_URI = '/geo-location/phonenumber';
 
