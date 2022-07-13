@@ -1,5 +1,5 @@
 
-const APP_VERSION = '1.0.1';
+const APP_VERSION = '1.0.2';
 
 // API URIs
 const API_BASE = 'https://public-api.sonetel.com';
