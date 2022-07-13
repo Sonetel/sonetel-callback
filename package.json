@@ -1,6 +1,6 @@
 {
   "name": "sonetel-callback-app",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Progressive Web App that makes use of Sonetel's callback APIs to initiate phone calls.",
   "main": "index.js",
   "private":true,
