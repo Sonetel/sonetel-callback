@@ -41,7 +41,7 @@ function login() {
     })
     .catch((err) => {
       // In case of failure, show the error message
-      updateAlertMessage("w3-pale-red", "<p> " + err + "</p>", 3000);
+      updateAlertMessage("w3-pale-red", "<p> " + err + "</p>", 5000);
     });
 
   // Clear the password field

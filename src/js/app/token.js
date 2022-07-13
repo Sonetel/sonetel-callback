@@ -7,52 +7,59 @@
  */
 async function getSonetelToken() {
   // Show a spinner while getting a token
-  simpleToggle("spinnerModal");
+  simpleToggle(SPINNER_ID);
 
-  var myHeaders = new Headers();
-  myHeaders.append(
+  let message = "An error has ocurred. Please try again.";
+  let myHeaders = new Headers();
+
+    myHeaders.append(
     "Authorization",
     "Basic " + btoa("sonetel-web" + ":" + "sonetel-web")
   );
   myHeaders.append("Connection", "keep-alive");
 
-  const response = await fetch(AUTH_API, {
-    method: "post",
-    headers: myHeaders,
-    body: new FormData(document.getElementById("loginForm")),
-  });
-  //Hide the spinner once we get the response
-  simpleToggle("spinnerModal");
+  try {
 
-  if (response.ok) {
+    const response = await fetch(AUTH_API, {
+      method: "post",
+      headers: myHeaders,
+      body: new FormData(document.getElementById("loginForm")),
+    });
+  
+    //Hide the spinner once we get the response
+    simpleToggle(SPINNER_ID);
+
+
     const responseJson = await response.json();
-    return responseJson;
-  } else {
-    var message;
-    switch (response.status) {
-      case 400:
-        message = "Incorrect password";
-        break;
-      case 401:
-        message = "Incorrect username";
-        break;
+
+    if (response.ok) {
+      return responseJson;
+    } else {
+      switch (response.status) {
+        case 400:
+        case 401:
+          message = responseJson.error_description;
+          break;
+      }
+      throw new Error(message);
     }
-    //const message = `${response.status}`;
+  } catch (err) {
+    toggleDisplay(SPINNER_ID, 'hide');
+    console.error(err);
     throw new Error(message);
   }
 }
 
 // Refresh the access token using the refresh_token
 async function refreshAccessToken() {
-
-  var myHeaders = new Headers();
+  let myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
     "Basic " + btoa("sonetel-web" + ":" + "sonetel-web")
   );
   myHeaders.append("Connection", "keep-alive");
 
-  var requestBody = new URLSearchParams();
+  let requestBody = new URLSearchParams();
   requestBody.append("grant_type", "refresh_token");
   requestBody.append("refresh", "yes");
   requestBody.append("refresh_token", localStorage.getItem("refresh_token"));
@@ -63,21 +70,27 @@ async function refreshAccessToken() {
     body: requestBody,
   };
 
-  const response = await fetch(AUTH_API, requestOptions);
-
-  if (response.ok) {
-    const responseJson = await response.json();
-    window.localStorage.setItem("access_token", responseJson["access_token"]);
-    window.localStorage.setItem("refresh_token", responseJson["refresh_token"]);
-    return true;
-  } else {
-    responseStatus = response.status;
-    if (responseStatus == 401) {
-      logout();
+  try {
+    const response = await fetch(AUTH_API, requestOptions);
+  
+    if (response.ok) {
+      const responseJson = await response.json();
+      window.localStorage.setItem("access_token", responseJson["access_token"]);
+      window.localStorage.setItem("refresh_token", responseJson["refresh_token"]);
+      return true;
     } else {
-      genericErrorMessage(5000);
-      return false;
+      responseStatus = response.status;
+      if (responseStatus == 401) {
+        logout();
+      } else {
+        genericErrorMessage(5000);
+        return false;
+      }
     }
+    
+  } catch (error) {
+    logout();
+    genericErrorMessage(5000);
   }
 }
 
@@ -88,19 +101,18 @@ function decodeJwt(token) {
 
 // Check if the token has expired or will expired within 1 hour
 // Returns true if token has expired otherwise false.
-async function checkTokenExpiry(){
-  const token = localStorage.getItem('access_token');
-    
-  const decodedToken = decodeJwt(token);
-  const currentTimeStamp = Math.floor(Date.now() / 1000); 
+async function checkTokenExpiry() {
+  const token = localStorage.getItem("access_token");
 
-  if(decodedToken.exp - currentTimeStamp <= 3600){
-    
+  const decodedToken = decodeJwt(token);
+  const currentTimeStamp = Math.floor(Date.now() / 1000);
+
+  if (decodedToken.exp - currentTimeStamp <= 3600) {
     // expired or about to expire.
     const refreshSuccess = await refreshAccessToken();
-    if(!refreshSuccess){
+    if (!refreshSuccess) {
       genericErrorMessage(2500);
-      setTimeout(logout(),2000)
+      setTimeout(logout(), 2000);
     }
   }
 
