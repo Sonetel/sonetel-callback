@@ -58,8 +58,8 @@ function checkSelectValue(value) {
     callOneSetting = 'other';
   } else {
     callOneSetting = 'email';
-    //callOneValue = userEmail;
-    //document.getElementById(CALL1_ID).value = userEmail;
+    callOneValue = userEmail;
+    document.getElementById(CALL1_ID).value = userEmail;
     toggleDisplay(CALL1_ID, "hide");
   }
   storeUserPref();
