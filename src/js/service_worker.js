@@ -1,7 +1,7 @@
 // ServiceWorker for the PWA
 
 // Cache version. Increment when a change is made to any of the cached assets.
-const staticCache = "static-v2";
+const staticCache = "static-v3";
 
 const assets = [
   "/",

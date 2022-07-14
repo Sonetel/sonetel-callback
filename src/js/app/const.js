@@ -1,5 +1,5 @@
 
-const APP_VERSION = '1.0.2';
+const APP_VERSION = '1.0.3';
 
 // API URIs
 const API_BASE = 'https://chat-api.sonetel.com';
