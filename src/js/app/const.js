@@ -1,5 +1,5 @@
 
-const APP_VERSION = '1.0.1';
+const APP_VERSION = '1.0.3';
 
 // API URIs
 const API_BASE = 'https://public-api.sonetel.com';
@@ -13,6 +13,7 @@ const CALL1_ID = 'call1';
 const CALL1_SETTINGS_ID = 'call1Settings';
 const CALL2_ID = 'call2';
 const SIGNIN_FORM_ID = 'signin';
+const SPINNER_ID = "spinnerModal";
 const MAKECALL_FORM_ID = "makecall";
 const LOGOUT_BTN_ID = "logoutButton";
 const NOTIF_RELOAD_ID = "notif-reload";

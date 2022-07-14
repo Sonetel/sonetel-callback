@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] 14-07-2022
+
+### Added
+- When changing the 'First call' setting, sometimes the changes aren't saved. Fix added for this.
+
+## [1.0.2] 13-07-2022
+
+### Added
+- Better error messages
+- Custom prompt when app is not installed
+- Other minor fixes
+
+## [1.0.1] 01-07-2022
+
+### Added
+- Format the phone number list in the Caller ID settings.
+
 ## [1.0.0] 30-06-2022
 
 ### Added
@@ -14,8 +31,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Save user's call preferences locally
 - Cache assets
 - Service worker update notification
-
-## [1.0.1] 01-07-2022
-
-### Added
-- Format the phone number list in the Caller ID settings.
