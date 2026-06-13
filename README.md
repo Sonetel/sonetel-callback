@@ -1,3 +1,7 @@
+> **🗄️ ARCHIVED — June 2026.** This repository was archived as part of Sonetel's org-wide repository governance review (June 2026). It is now **read-only and unmaintained**. Decision record: Sonetel/tech-debt#11.
+
+---
+
 <br />
 <div align="center">
   <a href="https://github.com/Sonetel/sonetel-callback/">
@@ -37,4 +41,4 @@ From your browser, go to https://sonetelcallback.netlify.app/. On compatible bro
 <strong>How does it work?</strong>
 
 When you install the app on your device, it tells your operating system that it is available to handle the links that use `tel:` protocol. This means, whenever you visit a website and click on a phone number on that website, you can open the Sonetel Callback App and use that to make a callback call.
-
+
